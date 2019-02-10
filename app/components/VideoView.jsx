@@ -101,7 +101,10 @@ const VideoView = props => {
           controls
           width="100%"
         >
-          <source src="./media/videos/Orange_flowers.webm" type="video/webm" />
+          <source
+            src="./media/videos/big-buck-bunny_trailer.webm"
+            type="video/webm"
+          />
           <p>Sorry, your browser doesn't support HTML 5 video.</p>
         </video>
         <figcaption>
