@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import TodoPage from './TodoPage.jsx';
+import VideoView from './VideoView.jsx';
 
-const App = props => <TodoPage />;
+const App = props => <VideoView />;
 
 export default App;
