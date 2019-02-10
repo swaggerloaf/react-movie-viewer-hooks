@@ -1,17 +1,18 @@
 @import './node_modules/bootstrap/scss/bootstrap';
 
 #videoContainer {
-  border: 2px solid #007bff;
+  border: 2px solid theme-color('info');
   width: 35%;
 }
 #buttons {
-  border: 2px solid #007bff;
+  border: 2px solid theme-color('info');
 }
+
 #controls {
   width: 35%;
-  border: 2px solid #007bff;
+  border: 2px solid theme-color('info');
 }
 
 #progress {
-  border: 2px solid #007bff;
+  border: 2px solid theme-color('info');
 }

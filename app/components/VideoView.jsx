@@ -29,6 +29,9 @@ const VideoView = props => {
   });
 
   var alterVolume = function(dir) {
+    setMessage('As you wish');
+    setShowMessage(true);
+    setMessageDuration(0);
     var currentVolume = Math.floor(video.current.volume * 10) / 10;
     if (dir === '+') {
       if (currentVolume < 1) video.current.volume += 0.1;
@@ -40,7 +43,7 @@ const VideoView = props => {
   function ticker() {
     // our job is to turn off messages when we can
     setMessageDuration(messageDuration + 1);
-    if (messageDuration == 4) {
+    if (messageDuration === 7) {
       setShowMessage(false);
       setMessageDuration(0);
       setMessage('');
@@ -62,6 +65,7 @@ const VideoView = props => {
 
   function handleTimeUpdate(e) {
     setVideoPosition(video.current.currentTime);
+    ticker();
   }
 
   function handleStopClick(e) {
@@ -82,8 +86,8 @@ const VideoView = props => {
   }
 
   return (
-    <>
-      <figure id="videoContainer">
+    <div className="container" id="videoContainer">
+      <figure>
         <video
           ref={video}
           onLoadedMetadata={handleLoadedMetaData}
@@ -106,92 +110,94 @@ const VideoView = props => {
         </video>
         <figcaption>
           Swaggerloaf |{' '}
-          <a href="https://github.com/swaggerloaf/react-movie-viewer-hooks.git">
+          <a
+            className="text-info"
+            href="https://github.com/swaggerloaf/react-movie-viewer-hooks.git"
+          >
             react movie viewer using hooks
           </a>
         </figcaption>
       </figure>
-      <div id="controls" className="card">
-        <div className="card-body text-info">
-          <h4 className="card-title">Control Panel</h4>
-          <div className="progress" style={{ width: progressBarWidth }}>
-            <progress
-              id="progress"
-              min={minLength}
-              max={maxLength}
-              value={videoPosition}
-              onClick={handleProgressClick}
-            />
-          </div>
-          <br />
-          <div
-            id="buttons"
-            className="btn-group text-info"
-            role="group"
-            aria-label="First group"
-          >
-            <button
-              className="btn btn-sm btn-info"
-              id="playpause"
-              type="button"
-              onClick={e => {
-                if (video.current.paused || video.current.ended) {
-                  setIsPlaying(true);
-                  video.current.play();
-                  setMessage('So glad you are enjoying this!');
-                  setShowMessage(true);
-                } else {
-                  video.current.pause();
-                  setIsPlaying(false);
-                  setMessage('Take a break.');
-                  setShowMessage(true);
-                }
-              }}
-            >
-              Play/Pause
-            </button>
-            <button
-              type="button"
-              onClick={handleStopClick}
-              className="btn btn-sm btn-info"
-            >
-              Stop
-            </button>
-            #
-            <label>
-              Mute/Unmute
-              <input
-                name="isMuted"
-                type="checkbox"
-                checked={isMuted}
-                onChange={handleMute}
-              />
-            </label>
-            <button
-              type="button"
-              onClick={() => alterVolume('+')}
-              className="btn btn-sm btn-info"
-            >
-              Vol+
-            </button>
-            <button
-              type="button"
-              onClick={() => alterVolume('-')}
-              className="btn btn-sm btn-info"
-            >
-              Vol-
-            </button>
-          </div>
+      <div className="card-body text-info">
+        <h4 className="card-title">Control Panel</h4>
+        <div className="progress" style={{ width: progressBarWidth }}>
+          <progress
+            id="progress"
+            min={minLength}
+            max={maxLength}
+            value={videoPosition}
+            onClick={handleProgressClick}
+          />
         </div>
+        <br />
         <div
-          className="alert alert-info"
-          style={{ visibility: showMessage ? 'visible' : 'hidden' }}
-          role="alert"
+          id="buttons"
+          className="btn-group text-info"
+          role="group"
+          aria-label="First group"
         >
-          {message}
+          <button
+            className="btn btn-sm btn-info"
+            id="playpause"
+            type="button"
+            onClick={e => {
+              if (video.current.paused || video.current.ended) {
+                setIsPlaying(true);
+                video.current.play();
+                setMessage('So glad you are enjoying this!');
+                setShowMessage(true);
+                setMessageDuration(0);
+              } else {
+                video.current.pause();
+                setIsPlaying(false);
+                setMessage('Take a break.');
+                setShowMessage(true);
+                setMessageDuration(0);
+              }
+            }}
+          >
+            Play/Pause
+          </button>
+          <button
+            type="button"
+            onClick={handleStopClick}
+            className="btn btn-sm btn-info"
+          >
+            Stop
+          </button>
+          <label>
+            Mute/Unmute
+            <input
+              name="isMuted"
+              type="checkbox"
+              checked={isMuted}
+              onChange={handleMute}
+            />
+          </label>
+          <button
+            type="button"
+            onClick={() => alterVolume('+')}
+            className="btn btn-sm btn-info"
+          >
+            Vol+
+          </button>
+          <button
+            type="button"
+            onClick={() => alterVolume('-')}
+            className="btn btn-sm btn-info"
+          >
+            Vol-
+          </button>
         </div>
       </div>
-    </>
+      <div
+        className="alert alert-info"
+        style={{ visibility: showMessage ? 'visible' : 'hidden' }}
+        role="alert"
+      >
+        {message}
+      </div>
+    </div>
   );
 };
 
