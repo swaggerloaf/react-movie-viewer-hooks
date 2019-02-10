@@ -1,13 +1,17 @@
 @import './node_modules/bootstrap/scss/bootstrap';
 
 #videoContainer {
-  border: 2px dashed darkcyan;
+  border: 2px solid #007bff;
+  width: 35%;
 }
-
+#buttons {
+  border: 2px solid #007bff;
+}
 #controls {
-  width: 30%;
+  width: 35%;
+  border: 2px solid #007bff;
 }
 
 #progress {
-  border: 2px solid darkcyan;
+  border: 2px solid #007bff;
 }

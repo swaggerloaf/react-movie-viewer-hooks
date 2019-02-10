@@ -1,13 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 
 const VideoView = props => {
+  // state
   const [showMessage, setShowMessage] = useState(true);
   const [message, setMessage] = useState('We have everything under control');
   const [messageDuration, setMessageDuration] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
   const [maxLength, setMaxLength] = useState(0);
   const [videoPosition, setVideoPosition] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  // ref
   const video = useRef();
+  // const
   const minLength = 0;
   const progressBarWidth = 100;
 
@@ -21,9 +25,7 @@ const VideoView = props => {
   useEffect(() => {
     var timerID = setInterval(() => ticker(), 1000);
 
-    return function cleanup() {
-      clearInterval(timerID);
-    };
+    return () => clearInterval(timerID);
   });
 
   var alterVolume = function(dir) {
@@ -69,24 +71,14 @@ const VideoView = props => {
   }
 
   function handleMute(e) {
-    video.current.muted = !video.current.muted;
-    setMessage('Sorry for the noise');
-    setShowMessage(true);
-    setMessageDuration(0);
-  }
-
-  function handleVolumeUp(e) {
-    video.current.muted = !video.current.muted;
-    setMessage('Crank it!');
-    setShowMessage(true);
-    setMessageDuration(0);
-  }
-
-  function handleVolumeDown(e) {
-    video.current.muted = !video.current.muted;
-    setMessage('Baby is crying');
-    setShowMessage(true);
-    setMessageDuration(0);
+    const isMuted = !video.current.muted;
+    video.current.muted = isMuted;
+    setIsMuted(isMuted);
+    if (isMuted) {
+      setMessage('Sorry for the noise');
+      setShowMessage(true);
+      setMessageDuration(0);
+    }
   }
 
   return (
@@ -99,8 +91,13 @@ const VideoView = props => {
           id="video"
           preload="metadata"
           controls
-          width="100%"
+          width="180px"
         >
+          <source
+            src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
+            poster="https://peach.blender.org/wp-content/uploads/title_anouncement.jpg?x11217"
+            width="620"
+          />
           <source
             src="./media/videos/big-buck-bunny_trailer.webm"
             type="video/webm"
@@ -128,12 +125,13 @@ const VideoView = props => {
           </div>
           <br />
           <div
+            id="buttons"
             className="btn-group text-info"
             role="group"
             aria-label="First group"
           >
             <button
-              className="btn btn-sm btn-dark"
+              className="btn btn-sm btn-info"
               id="playpause"
               type="button"
               onClick={e => {
@@ -155,34 +153,31 @@ const VideoView = props => {
             <button
               type="button"
               onClick={handleStopClick}
-              className="btn btn-sm btn-dark"
+              className="btn btn-sm btn-info"
             >
               Stop
             </button>
-          </div>
-          <div
-            className="btn-group text-info"
-            role="group"
-            aria-label="Second group"
-          >
-            <button
-              type="button"
-              onClick={handleMute}
-              className="btn btn-sm btn-dark"
-            >
+            #
+            <label>
               Mute/Unmute
-            </button>
+              <input
+                name="isMuted"
+                type="checkbox"
+                checked={isMuted}
+                onChange={handleMute}
+              />
+            </label>
             <button
               type="button"
               onClick={() => alterVolume('+')}
-              className="btn btn-sm btn-dark"
+              className="btn btn-sm btn-info"
             >
               Vol+
             </button>
             <button
               type="button"
               onClick={() => alterVolume('-')}
-              className="btn btn-sm btn-dark"
+              className="btn btn-sm btn-info"
             >
               Vol-
             </button>

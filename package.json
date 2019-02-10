@@ -9,16 +9,12 @@
     "test": "jasmine"
   },
   "license": "MIT",
-  "repository": "https://github.com/swaggerloaf/react-seedling",
+  "repository": "https://github.com/swaggerloaf/react-movie-viewer-hooks",
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "prop-types": "15.6.2",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
-    "redux": "^4.0.1",
-    "redux-thunk": "2.3.0",
-    "react-transition-group": "^2.5.3",
-    "react-redux": "^6.0.0",
     "bootstrap": "4.2.1"
   },
   "devDependencies": {
@@ -30,14 +26,12 @@
     "@types/react-dom": "16.0.11",
     "babel-eslint": "~10.0.1",
     "babel-loader": "^8.0.5",
-    "classnames": "2.2.6",
     "css-loader": "2.1.0",
     "eslint": "5.13.0",
     "eslint-config-prettier": "4.0.0",
     "file-loader": "~3.0.1",
     "prettier": "^1.16.4",
     "style-loader": "0.23.1",
-    "npm-run-all": "4.1.5",
     "webpack": "4.29.3",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.1.14",
