@@ -1,5 +1,26 @@
 import React, { useEffect, useState, useRef } from 'react';
 
+// custom hook
+function useInterval(callback, delay, msgMaxDuration) {
+  const savedCallback = useRef();
+
+  // Remember the latest callback.
+  useEffect(() => {
+    savedCallback.current = callback;
+  });
+
+  // Set up the interval.
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+    if (delay !== null) {
+      let id = setInterval(tick, delay);
+      return () => clearInterval(id);
+    }
+  }, [delay, msgMaxDuration]);
+}
+
 const VideoView = props => {
   // state
   const [showMessage, setShowMessage] = useState(true);
@@ -9,6 +30,7 @@ const VideoView = props => {
   const [maxLength, setMaxLength] = useState(0);
   const [videoPosition, setVideoPosition] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [messageMaxDuration, setMessageMaxDuration] = useState(7);
   // ref
   const video = useRef();
   // const
@@ -22,11 +44,7 @@ const VideoView = props => {
     }
   });
 
-  useEffect(() => {
-    var timerID = setInterval(() => ticker(), 1000);
-
-    return () => clearInterval(timerID);
-  });
+  useInterval(ticker, 1000, messageMaxDuration);
 
   var alterVolume = function(dir) {
     setMessage('As you wish');
@@ -43,7 +61,7 @@ const VideoView = props => {
   function ticker() {
     // our job is to turn off messages when we can
     setMessageDuration(messageDuration + 1);
-    if (messageDuration === 7) {
+    if (messageDuration === messageMaxDuration) {
       setShowMessage(false);
       setMessageDuration(0);
       setMessage('');
