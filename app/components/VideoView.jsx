@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import VideoButton from './VideoButton.jsx';
+import Message from './Message.jsx';
 import useVideo from '../hooks/use-video';
 import useInterval from '../hooks/use-interval';
 import useMessage from '../hooks/use-message';
@@ -110,7 +111,7 @@ const VideoView = props => {
           id="video"
           preload="metadata"
           controls
-          width="180px"
+          width="220px"
         >
           <source
             src="https://archive.org/download/BigBuckBunny_124/Content/big_buck_bunny_720p_surround.mp4"
@@ -182,13 +183,7 @@ const VideoView = props => {
           <VideoButton onClick={() => alterVolume('-')}>Vol-</VideoButton>
         </div>
       </div>
-      <div
-        className="alert alert-info"
-        style={{ visibility: showMessage ? 'visible' : 'hidden' }}
-        role="alert"
-      >
-        {message}
-      </div>
+      <Message showMessage={showMessage}>{message}</Message>
     </div>
   );
 };
