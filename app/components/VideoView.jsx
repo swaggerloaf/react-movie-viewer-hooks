@@ -1,36 +1,32 @@
-import React, { useEffect, useState, useRef } from 'react';
-
-// custom hook
-function useInterval(callback, delay, msgMaxDuration) {
-  const savedCallback = useRef();
-
-  // Remember the latest callback.
-  useEffect(() => {
-    savedCallback.current = callback;
-  });
-
-  // Set up the interval.
-  useEffect(() => {
-    function tick() {
-      savedCallback.current();
-    }
-    if (delay !== null) {
-      let id = setInterval(tick, delay);
-      return () => clearInterval(id);
-    }
-  }, [delay, msgMaxDuration]);
-}
+import React, { useEffect, useRef } from 'react';
+import useVideo from '../hooks/use-video';
+import useInterval from '../hooks/use-interval';
+import useMessage from '../hooks/use-message';
 
 const VideoView = props => {
   // state
-  const [showMessage, setShowMessage] = useState(true);
-  const [message, setMessage] = useState('We have everything under control');
-  const [messageDuration, setMessageDuration] = useState(0);
-  const [isMuted, setIsMuted] = useState(false);
-  const [maxLength, setMaxLength] = useState(0);
-  const [videoPosition, setVideoPosition] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [messageMaxDuration, setMessageMaxDuration] = useState(7);
+  const {
+    showMessage,
+    setShowMessage,
+    message,
+    setMessage,
+    messageDuration,
+    setMessageDuration,
+    messageMaxDuration,
+    setMessageMaxDuration
+  } = useMessage();
+
+  const {
+    isMuted,
+    setIsMuted,
+    maxLength,
+    setMaxLength,
+    videoPosition,
+    setVideoPosition,
+    isPlaying,
+    setIsPlaying
+  } = useVideo();
+
   // ref
   const video = useRef();
   // const
@@ -163,15 +159,13 @@ const VideoView = props => {
                 setIsPlaying(true);
                 video.current.play();
                 setMessage('So glad you are enjoying this!');
-                setShowMessage(true);
-                setMessageDuration(0);
               } else {
                 video.current.pause();
                 setIsPlaying(false);
                 setMessage('Take a break.');
-                setShowMessage(true);
-                setMessageDuration(0);
               }
+              setShowMessage(true);
+              setMessageDuration(0);
             }}
           >
             Play/Pause
