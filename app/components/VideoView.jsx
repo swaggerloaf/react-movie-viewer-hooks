@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import VideoButton from './VideoButton.jsx';
 import useVideo from '../hooks/use-video';
 import useInterval from '../hooks/use-interval';
 import useMessage from '../hooks/use-message';
@@ -150,10 +151,7 @@ const VideoView = props => {
           role="group"
           aria-label="First group"
         >
-          <button
-            className="btn btn-sm btn-info"
-            id="playpause"
-            type="button"
+          <VideoButton
             onClick={e => {
               if (video.current.paused || video.current.ended) {
                 setIsPlaying(true);
@@ -169,14 +167,8 @@ const VideoView = props => {
             }}
           >
             Play/Pause
-          </button>
-          <button
-            type="button"
-            onClick={handleStopClick}
-            className="btn btn-sm btn-info"
-          >
-            Stop
-          </button>
+          </VideoButton>
+          <VideoButton onClick={handleStopClick}>Stop</VideoButton>
           <label>
             Mute/Unmute
             <input
@@ -186,20 +178,8 @@ const VideoView = props => {
               onChange={handleMute}
             />
           </label>
-          <button
-            type="button"
-            onClick={() => alterVolume('+')}
-            className="btn btn-sm btn-info"
-          >
-            Vol+
-          </button>
-          <button
-            type="button"
-            onClick={() => alterVolume('-')}
-            className="btn btn-sm btn-info"
-          >
-            Vol-
-          </button>
+          <VideoButton onClick={() => alterVolume('+')}>Vol+</VideoButton>
+          <VideoButton onClick={() => alterVolume('-')}>Vol-</VideoButton>
         </div>
       </div>
       <div
